@@ -17,12 +17,9 @@ export function activate(context: vscode.ExtensionContext) {
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
     let disposable = vscode.commands.registerCommand('extension.copyJsonPath', () => {
-        // The code you place here will be executed every time your command is executed
-
-        // Display a message box to the user
         const editor = vscode.window.activeTextEditor
         if (!editor) {
-            return // No open text editor
+            return
         }
 
         try {
@@ -30,10 +27,15 @@ export function activate(context: vscode.ExtensionContext) {
             JSON.parse(text)
             const path = jsonPathTo(text, editor.document.offsetAt(editor.selection.active))
             ncp.copy(path, () => {
-                vscode.window.showInformationMessage(`Path "${path}" copied to clipboard.`)  
+                // vscode.window.showInformationMessage(`Path "${path}" copied to clipboard.`)
             })
         } catch (ex) {
-            console.log(ex)
+            if (ex instanceof SyntaxError) {
+                vscode.window.showErrorMessage(`Invalid JSON.`)
+            } else {
+                vscode.window.showErrorMessage(`Couldn't copy path.`)
+                console.error('Error in copy-json-path', ex)
+            }
         }
     })
 
