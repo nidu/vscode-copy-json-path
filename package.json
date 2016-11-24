@@ -13,6 +13,14 @@
   "activationEvents": [
     "onCommand:extension.copyJsonPath"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nidu/vscode-copy-json-path.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nidu/vscode-copy-json-path/issues"
+  },
+  "homepage": "https://github.com/nidu/vscode-copy-json-path/blob/master/README.md",
   "main": "./out/src/extension",
   "contributes": {
     "commands": [
@@ -22,6 +30,9 @@
       }
     ]
   },
+  "keywords": [
+    "JSON"
+  ],
   "scripts": {
     "vscode:prepublish": "tsc -p ./",
     "compile": "tsc -watch -p ./",
