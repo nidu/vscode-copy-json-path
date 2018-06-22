@@ -16,6 +16,10 @@ Path would be `a[1].k`.
 
 Launch command `Copy Json Path`.
 
+## Linux dependency
+
+xclip
+
 ## Change Log
 
 ### 0.0.1
