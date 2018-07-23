@@ -1,6 +1,6 @@
 # copy-json-path
 
-Copy path to selected JSON node as string.
+Copy path to selected JSON or JS node as string.
 
 Path parts are concatenated with `.` or wrapped with `[""]` for object keys and wrapped in `[]` for array indices.
 
@@ -12,6 +12,17 @@ For state like this (cursor position is bold)
 
 Path would be `a[1].k`.
 
+For JS like this 
+
+```
+var a = {"b": {c: 4, daq: [5, 15]}}
+var b = {q: [2, 1**2**]}
+```
+
+Path would be `q[1]`.
+
+NOTE: JS objects are not validated.
+
 ## Using
 
 Launch command `Copy Json Path`.
@@ -21,6 +32,13 @@ Launch command `Copy Json Path`.
 xclip
 
 ## Change Log
+
+### 0.0.2
+
+- Single quoted and unquoted keys are allowed
+- Can copy path in js objects (expects valid js, no check for validity)
+- Dont validate JSON on start because we wanna call it from js
+- Path is also copied when cursor stands to the left of key (could return error before)
 
 ### 0.0.1
 

@@ -2,7 +2,7 @@
   "name": "copy-json-path",
   "displayName": "copy-json-path",
   "description": "Copy json path under the cursor",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "nidu",
   "engines": {
     "vscode": "^1.5.0"

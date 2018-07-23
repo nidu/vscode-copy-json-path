@@ -24,7 +24,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         try {
             const text = editor.document.getText()
-            JSON.parse(text)
+            // JSON.parse(text)
             const path = jsonPathTo(text, editor.document.offsetAt(editor.selection.active))
             ncp.copy(path, () => {
                 // vscode.window.showInformationMessage(`Path "${path}" copied to clipboard.`)
