@@ -2,7 +2,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode'
-import {jsonPathTo} from './jsonPathTo'
+import {jsPathTo} from './jsPathTo'
 import * as ncp from 'copy-paste'
 
 // this method is called when your extension is activated
@@ -25,13 +25,14 @@ export function activate(context: vscode.ExtensionContext) {
         try {
             const text = editor.document.getText()
             // JSON.parse(text)
-            const path = jsonPathTo(text, editor.document.offsetAt(editor.selection.active))
+            const path = jsPathTo(text, editor.document.offsetAt(editor.selection.active))
             ncp.copy(path, () => {
                 // vscode.window.showInformationMessage(`Path "${path}" copied to clipboard.`)
             })
         } catch (ex) {
             if (ex instanceof SyntaxError) {
                 vscode.window.showErrorMessage(`Invalid JSON.`)
+                console.error('Error in copy-json-path', ex)
             } else {
                 vscode.window.showErrorMessage(`Couldn't copy path.`)
                 console.error('Error in copy-json-path', ex)

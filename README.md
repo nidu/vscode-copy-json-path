@@ -33,6 +33,12 @@ xclip
 
 ## Change Log
 
+### 0.0.3
+
+- Less broken JS object support
+- Fix when getting path before key like `{a: {# b: 3}}`
+- Audit fix
+
 ### 0.0.2
 
 - Single quoted and unquoted keys are allowed

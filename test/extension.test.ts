@@ -10,13 +10,13 @@ import * as assert from 'assert';
 // as well as import your extension to test it
 import * as vscode from 'vscode';
 import * as myExtension from '../src/extension';
-import {jsonPathTo} from '../src/jsonPathTo'
+import {jsPathTo} from '../src/jsPathTo'
 
 // Defines a Mocha test suite to group tests of similar kind together
 suite("Extension Tests", () => {
 
     // Defines a Mocha unit test
-    test("jsonPathTo", () => {
-        assert.equal('a', jsonPathTo('{"a": 1}', 4))
+    test("jsPathTo", () => {
+        assert.equal('a', jsPathTo('{"a": 1}', 4))
     });
 });
