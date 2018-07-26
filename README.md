@@ -33,6 +33,11 @@ xclip
 
 ## Change Log
 
+### 0.0.4
+
+- Better JS support
+- Using acorn parser so valid JS is expected
+
 ### 0.0.3
 
 - Less broken JS object support
