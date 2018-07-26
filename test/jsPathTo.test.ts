@@ -78,4 +78,70 @@ describe("jsonPathTo", () => {
     checkJsonPath('q', "{b, #q}")
 
     checkJsonPath('b', "{a: function() { return 13 }, b: 1#4}")
+
+    checkJsonPath('contributes.commands[0].title', `
+      {
+        "name": "copy-json-path",
+        "displayName": "copy-json-path",
+        "description": "Copy json path under the cursor",
+        "version": "0.0.4",
+        "publisher": "nidu",
+        "engines": {
+          "vscode": "^1.5.0"
+        },
+        "categories": [
+          "Other"
+        ],
+        "activationEvents": [
+          "onCommand:extension.copyJsonPath"
+        ],
+        "repository": { 
+          "type": "git",
+          "url": "https://github.com/nidu/vscode-copy-json-path.git"
+        },
+        "bugs": {
+          "url": "https://github.com/nidu/vscode-copy-json-path/issues"
+        },
+        "homepage": "https://github.com/nidu/vscode-copy-json-path/blob/master/README.md",
+        "main": "./out/src/extension",
+        "contributes": {
+          "commands": [
+            {
+              "command": "extension.copyJsonPath",
+              "t#itle": "Copy Json Path"
+            }
+          ]
+        },
+        "keywords": [
+          "JSON"
+        ],
+        "scripts": {
+          "vscode:prepublish": "tsc -p ./",
+          "compile": "tsc -watch -p ./",
+          "postinstall": "node ./node_modules/vscode/bin/install",
+          "test": "tsc -p . && mocha out/test/jsPathTo.test.js"
+        },
+        "devDependencies": {
+          "@types/mocha": "^2.2.32",
+          "@types/node": "^6.0.40",
+          "mocha": "^5.2.0",
+          "mocha-typescript": "^1.0.11",
+          "typescript": "^2.0.3",
+          "vscode": "^1.0.0"
+        },
+        "dependencies": {
+          "@types/copy-paste": "^1.1.30",
+          "acorn": "^5.7.1",
+          "copy-paste": "^1.3.0"
+        }
+      }
+      `)
+
+    checkJsonPath('dependencies["@types/copy-paste"]', `{
+        "dependencies": {
+            "@types/copy-paste": "^1.1.#30",
+            "acorn": "^5.7.1",
+            "copy-paste": "^1.3.0"
+          }
+        }`)
 })

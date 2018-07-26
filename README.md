@@ -33,6 +33,10 @@ xclip
 
 ## Change Log
 
+### 0.0.5
+
+- Fix JSON check function
+
 ### 0.0.4
 
 - Better JS support

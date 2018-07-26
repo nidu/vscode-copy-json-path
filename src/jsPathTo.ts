@@ -10,7 +10,7 @@ interface Frame {
 }
 
 function looksLikeJson(text: string) {
-    return text.match(/^\s*[{\[].*[}\]]\s*$/)
+    return text.match(/^\s*[{\[](.|[\r\n])*[}\]]\s*$/)
 }
 
 export function jsPathTo(text: string, offset: number) {
