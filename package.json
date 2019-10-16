@@ -28,7 +28,16 @@
         "command": "extension.copyJsonPath",
         "title": "Copy Json Path"
       }
-    ]
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "resourceLangId == json || resourceLangId == jsonc",
+          "command": "extension.copyJsonPath",
+          "group": "navigation"
+        }
+      ]
+    }
   },
   "keywords": [
     "JSON",
