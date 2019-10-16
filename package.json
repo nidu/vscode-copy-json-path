@@ -31,7 +31,9 @@
     ]
   },
   "keywords": [
-    "JSON"
+    "JSON",
+    "copy",
+    "path"
   ],
   "scripts": {
     "vscode:prepublish": "tsc -p ./",
