@@ -32,7 +32,7 @@
     "menus": {
       "editor/context": [
         {
-          "when": "resourceLangId == json || resourceLangId == jsonc",
+          "when": "editorLangId == json || editorLangId == jsonc",
           "command": "extension.copyJsonPath",
           "group": "navigation"
         }
