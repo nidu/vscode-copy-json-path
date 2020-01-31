@@ -25,13 +25,17 @@ NOTE: JS objects are not validated.
 
 ## Using
 
-Launch command `Copy Json Path`.
+Launch command `Copy Json Path` from command palette or context menu.
 
 ## Linux dependency
 
 xclip
 
 ## Change Log
+
+### 0.1.0
+
+- Added context menu command (@mamoruuu)
 
 ### 0.0.5
 
