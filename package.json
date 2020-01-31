@@ -28,10 +28,21 @@
         "command": "extension.copyJsonPath",
         "title": "Copy Json Path"
       }
-    ]
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "editorLangId == json || editorLangId == jsonc",
+          "command": "extension.copyJsonPath",
+          "group": "navigation"
+        }
+      ]
+    }
   },
   "keywords": [
-    "JSON"
+    "JSON",
+    "copy",
+    "path"
   ],
   "scripts": {
     "vscode:prepublish": "tsc -p ./",
