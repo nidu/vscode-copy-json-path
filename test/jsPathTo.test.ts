@@ -8,7 +8,9 @@ function checkJsonPath(expected: string, strWithCursor: string) {
     if (pos == -1) throw `Cursor not found in ${strWithCursor}`
 
     const path = jsPathTo(strWithCursor.replace('#', ''), pos)
-    assert.equal(expected, path, `Expected [${expected}], got [${path}] for [${strWithCursor}]`)
+    it(expected, () =>
+      assert.equal(expected, path, `Expected [${expected}], got [${path}] for [${strWithCursor}]`)
+    )
 }
 
 describe("jsonPathTo", () => {
