@@ -3,7 +3,6 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode'
 import {jsPathTo} from './jsPathTo'
-import * as ncp from 'copy-paste'
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -26,9 +25,7 @@ export function activate(context: vscode.ExtensionContext) {
             const text = editor.document.getText()
             // JSON.parse(text)
             const path = jsPathTo(text, editor.document.offsetAt(editor.selection.active))
-            ncp.copy(path, () => {
-                // vscode.window.showInformationMessage(`Path "${path}" copied to clipboard.`)
-            })
+            vscode.env.clipboard.writeText(path)
         } catch (ex) {
             if (ex instanceof SyntaxError) {
                 vscode.window.showErrorMessage(`Invalid JSON.`)
