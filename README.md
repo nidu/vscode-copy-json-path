@@ -33,6 +33,11 @@ xclip
 
 ## Change Log
 
+### 0.1.1
+
+- Use vscode clipboard API for copy (@amoshydra)
+- Update dependencies
+
 ### 0.1.0
 
 - Added context menu command (@mamoruuu)
