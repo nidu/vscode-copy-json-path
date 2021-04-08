@@ -27,6 +27,10 @@ NOTE: JS objects are not validated.
 
 Launch command `Copy Json Path` from command palette or context menu.
 
+## Configuration
+
+- `extension.copyJsonPath.nonQuotedKeyRegex`: regex that tests whether key in path can be used without quotes. If key matches - key is not quoted. Use it if you want to have path `a.b-c` instead of `a[\"b-c\"]` for example. Default is `^[a-zA-Z$_][a-zA-Z\\d$_]*$`.
+
 ## Linux dependency
 
 xclip

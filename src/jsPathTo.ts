@@ -1,6 +1,8 @@
 import { parse } from "acorn";
 var walk = require("acorn/dist/walk")
 
+const DEFAULT_NON_QUOTED_KEY_REGEX = '^[a-zA-Z$_][a-zA-Z\\d$_]*$'
+
 enum ColType {Object, Array} 
 
 interface Frame {
@@ -13,7 +15,7 @@ function looksLikeJson(text: string) {
     return text.match(/^\s*[{\[](.|[\r\n])*[}\]]\s*$/)
 }
 
-export function jsPathTo(text: string, offset: number) {
+export function jsPathTo(text: string, offset: number, nonQuotedKeyRegex: string = DEFAULT_NON_QUOTED_KEY_REGEX) {
     if (looksLikeJson(text)) {
         const prefix = "a="
         text = prefix + text
@@ -88,19 +90,19 @@ export function jsPathTo(text: string, offset: number) {
             }
         })
     } catch (e) {
-        if (e == "Ok") return pathToString(path)
+        if (e == "Ok") return pathToString(path, nonQuotedKeyRegex)
         throw e
     }
     return ""
 }
 
-function pathToString(path: Frame[]): string {
+function pathToString(path: Frame[], nonQuotedKeyRegex: string): string {
     let s = ''
     for (const frame of path) {
         if (frame.colType == ColType.Object) {
-            if (!frame.key.match(/^[a-zA-Z$_][a-zA-Z\d$_]*$/)) {
-                const key = frame.key.replace('"', '\\"')
-                s += `["${frame.key}"]`
+            if (!frame.key.match(new RegExp(nonQuotedKeyRegex))) {
+                const key = frame.key.replace(/"/g, '\\"')
+                s += `["${key}"]`
             } else {
                 if (s.length) {
                     s += '.'
