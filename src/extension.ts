@@ -22,9 +22,22 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
         try {
+            let nonQuotedKeyRegex = vscode.workspace
+                .getConfiguration('extension.copyJsonPath')
+                .get('nonQuotedKeyRegex') as string
+            if (nonQuotedKeyRegex) {
+                try {
+                    new RegExp(nonQuotedKeyRegex)
+                } catch(e) {
+                    vscode.window.showErrorMessage(`Invalid regex extension.copyJsonPath.nonQuotedKeyRegex "${nonQuotedKeyRegex}". You can fix it in user preferences.`)
+                    console.error('Invalid regex extension.copyJsonPath.nonQuotedKeyRegex', nonQuotedKeyRegex)
+                    return
+                }
+            }
+
             const text = editor.document.getText()
             // JSON.parse(text)
-            const path = jsPathTo(text, editor.document.offsetAt(editor.selection.active))
+            const path = jsPathTo(text, editor.document.offsetAt(editor.selection.active), nonQuotedKeyRegex)
             vscode.env.clipboard.writeText(path)
         } catch (ex) {
             if (ex instanceof SyntaxError) {

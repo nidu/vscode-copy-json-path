@@ -3,13 +3,13 @@ import {jsPathTo} from '../src/jsPathTo'
 
 const cursorChar = "#"
 
-function checkJsonPath(expected: string, strWithCursor: string) {
-    const pos = strWithCursor.indexOf("#")
+function checkJsonPath(expected: string, strWithCursor: string, nonQuotedKeyRegex?: string) {
+    const pos = strWithCursor.indexOf(cursorChar)
     if (pos == -1) throw `Cursor not found in ${strWithCursor}`
 
-    const path = jsPathTo(strWithCursor.replace('#', ''), pos)
+    const path = jsPathTo(strWithCursor.replace(cursorChar, ''), pos, nonQuotedKeyRegex)
     it(expected, () =>
-      assert.equal(expected, path, `Expected [${expected}], got [${path}] for [${strWithCursor}]`)
+      assert.strictEqual(expected, path, `Expected [${expected}], got [${path}] for [${strWithCursor}]`)
     )
 }
 
@@ -27,6 +27,11 @@ describe("jsonPathTo", () => {
     checkJsonPath('a.b', '{"a": {"b#": 1}}')
     checkJsonPath('a', '{"a"#: {"b": 1}}')
 
+    checkJsonPath('a["b-c"].d', '{"a": {"b-c": {"d#": 1}}}')
+    checkJsonPath('a.b-c.d', '{"a": {"b-c": {"d#": 1}}}', '^[a-zA-Z$_][a-zA-Z\\d$_-]*$')
+    checkJsonPath('a.b-c', '{"a": {"b-#c": {"d": 1}}}', '^[a-zA-Z$_][a-zA-Z\\d$_-]*$')
+    checkJsonPath('a.b.c.d', '{"a": {"b.c": {"d#": 1}}}', '^[a-zA-Z$_][a-zA-Z\\d$_.]*$')
+
     checkJsonPath('c[1]', '{"a": {"b": 1}, "c": [4, #6, 8]}')
     checkJsonPath('a.b', '{"a": {#"b": 1}, "c": [4, 6, 8]}')
     checkJsonPath('a.b', '{"a": {# "b": 1}, "c": [4, 6, 8]}')
@@ -35,6 +40,8 @@ describe("jsonPathTo", () => {
     checkJsonPath("c[0][\"k''\"]", '{"a": {"b": 1}, "c": [{"k\'#\'": true}, 6, 8]}')
     checkJsonPath('a.j["2a"]', '{"a": {"b": 1, "j": {"1a": "b", "2a#": false}}, "c": [{"k\'\'": true}, 6, 8]}')
 
+    checkJsonPath('a["\\"Quoted\\" string"]', '{"a": {"\\"Quoted\\" strin#g": 1}}')
+    
     checkJsonPath('b.c', 'var a = {"b": {#c: 4, daq: [5, 15]}}')
     checkJsonPath('b.c', 'var a = {"b": {c#: 4, daq: [5, 15]}}')
     checkJsonPath('b.daq[1]', 'var a = {"b": {c: 4, daq: [5, 15#]}}')
@@ -146,4 +153,10 @@ describe("jsonPathTo", () => {
             "copy-paste": "^1.3.0"
           }
         }`)
+
+    it('invalid regex should throw', () => {
+      assert.throws(() => {
+        jsPathTo('{"a": 1}', 1, '(')
+      })
+    })
 })

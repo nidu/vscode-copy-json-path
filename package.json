@@ -37,6 +37,16 @@
           "group": "navigation"
         }
       ]
+    },
+    "configuration": {
+      "title": "copy-json-path",
+      "properties": {
+        "extension.copyJsonPath.nonQuotedKeyRegex": {
+          "type": "string",
+          "default": "^[a-zA-Z$_][a-zA-Z\\d$_]*$",
+          "markdownDescription": "Regex that tests whether key in path can be used without quotes. If key matches - key is not quoted. Use it if you want to have path `a.b-c` instead of `a[\"b-c\"]` for example. Default is `^[a-zA-Z$_][a-zA-Z\\d$_]*$`."
+        }
+      }
     }
   },
   "keywords": [
