@@ -37,6 +37,10 @@ xclip
 
 ## Change Log
 
+### 0.2.0
+
+- Allow custom non quoted key regex (see issue #6)
+
 ### 0.1.1
 
 - Use vscode clipboard API for copy (@amoshydra)
