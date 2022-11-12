@@ -2,7 +2,7 @@
   "name": "copy-json-path",
   "displayName": "copy-json-path",
   "description": "Copy json path under the cursor",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "publisher": "nidu",
   "engines": {
     "vscode": "^1.5.0"
@@ -44,7 +44,7 @@
         "extension.copyJsonPath.nonQuotedKeyRegex": {
           "type": "string",
           "default": "^[a-zA-Z$_][a-zA-Z\\d$_]*$",
-          "markdownDescription": "Regex that tests whether key in path can be used without quotes. If key matches - key is not quoted. Use it if you want to have path `a.b-c` instead of `a[\"b-c\"]` for example. Default is `^[a-zA-Z$_][a-zA-Z\\d$_]*$`."
+          "markdownDescription": "Regex that tests whether key in path can be used without quotes. If key matches - key is not quoted. Use it if you want to have path `a.b-c` instead of `a[\"b-c\"]` for example. If you want all keys to be escaped - use regex that doesn't match anything, e.g. single space ` ` will only match single space, which is very rare object key (you can go more complicated like `a{1000}`). Default is `^[a-zA-Z$_][a-zA-Z\\d$_]*$`."
         }
       }
     }
