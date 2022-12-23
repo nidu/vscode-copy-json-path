@@ -2,7 +2,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode'
-import {jsPathTo} from './jsPathTo'
+import { jsPathTo } from './jsPathTo'
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -25,10 +25,19 @@ export function activate(context: vscode.ExtensionContext) {
             let nonQuotedKeyRegex = vscode.workspace
                 .getConfiguration('extension.copyJsonPath')
                 .get('nonQuotedKeyRegex') as string
+
+            const fileNameAsPrefix = vscode.workspace
+                .getConfiguration('extension.copyJsonPath')
+                .get('putFileNameInPath') as boolean
+
+            const prefixSeparator = vscode.workspace
+                .getConfiguration('extension.copyJsonPath')
+                .get('prefixSeparator') as string
+
             if (nonQuotedKeyRegex) {
                 try {
                     new RegExp(nonQuotedKeyRegex)
-                } catch(e) {
+                } catch (e) {
                     vscode.window.showErrorMessage(`Invalid regex extension.copyJsonPath.nonQuotedKeyRegex "${nonQuotedKeyRegex}". You can fix it in user preferences.`)
                     console.error('Invalid regex extension.copyJsonPath.nonQuotedKeyRegex', nonQuotedKeyRegex)
                     return
@@ -36,8 +45,16 @@ export function activate(context: vscode.ExtensionContext) {
             }
 
             const text = editor.document.getText()
-            // JSON.parse(text)
-            const path = jsPathTo(text, editor.document.offsetAt(editor.selection.active), nonQuotedKeyRegex)
+
+            let path = jsPathTo(text, editor.document.offsetAt(editor.selection.active), nonQuotedKeyRegex)
+
+            if (fileNameAsPrefix) {
+                const fileName = editor.document.fileName
+                const fileNameWithoutExtension = fileName.substring(0, fileName.lastIndexOf('.'))
+                
+                path = `${fileNameWithoutExtension}${prefixSeparator}${path}`
+            }
+
             vscode.env.clipboard.writeText(path)
         } catch (ex) {
             if (ex instanceof SyntaxError) {
