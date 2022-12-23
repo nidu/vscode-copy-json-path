@@ -2,7 +2,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode'
-import { jsPathTo } from './jsPathTo'
+import {jsPathTo} from './jsPathTo'
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -45,7 +45,7 @@ export function activate(context: vscode.ExtensionContext) {
             }
 
             const text = editor.document.getText()
-
+            // JSON.parse(text)
             let path = jsPathTo(text, editor.document.offsetAt(editor.selection.active), nonQuotedKeyRegex)
 
             if (fileNameAsPrefix) {

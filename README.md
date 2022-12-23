@@ -12,7 +12,7 @@ For state like this (cursor position is bold)
 
 Path would be `a[1].k`.
 
-For JS like this
+For JS like this 
 
 ```
 var a = {"b": {c: 4, daq: [5, 15]}}
