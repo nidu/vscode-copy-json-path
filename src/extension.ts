@@ -37,7 +37,7 @@ export function activate(context: vscode.ExtensionContext) {
             if (nonQuotedKeyRegex) {
                 try {
                     new RegExp(nonQuotedKeyRegex)
-                } catch (e) {
+                } catch(e) {
                     vscode.window.showErrorMessage(`Invalid regex extension.copyJsonPath.nonQuotedKeyRegex "${nonQuotedKeyRegex}". You can fix it in user preferences.`)
                     console.error('Invalid regex extension.copyJsonPath.nonQuotedKeyRegex', nonQuotedKeyRegex)
                     return
