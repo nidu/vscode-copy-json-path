@@ -50,10 +50,29 @@ export function activate(context: vscode.ExtensionContext) {
             let path = jsPathTo(text, editor.document.offsetAt(editor.selection.active), nonQuotedKeyRegex)
 
             if (fileNameAsPrefix && !editor.document.isUntitled) {
-                const fileName = parse(editor.document.fileName).base;
-                const fileNameWithoutExtension = fileName.substring(0, fileName.lastIndexOf('.'))
                 
-                path = `${fileNameWithoutExtension}${prefixSeparator}${path}`
+                /**
+                 * Get the file name and extension. 
+                 * If the file has no name, like `.json`, the extension will be empty.
+                 */
+                const {
+                    name,
+                    ext,
+                } = parse(editor.document.fileName);
+
+                /**
+                 * If the file has an extension, use the whole name as prefix.
+                 * Otherwise, use the name without the first dot.
+                 * 
+                 * Ex: 
+                 *  - `text.json` -> `text`
+                 *  - `.json` -> `json`
+                 */
+                const prefix = ext ? name : name.substring(name.indexOf('.') + 1);
+
+                if (prefix) {
+                    path = `${prefix}${prefixSeparator}${path}`;
+                }  
             }
 
             // check if the document is saved
