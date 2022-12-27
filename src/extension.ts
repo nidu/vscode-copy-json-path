@@ -49,12 +49,14 @@ export function activate(context: vscode.ExtensionContext) {
             // JSON.parse(text)
             let path = jsPathTo(text, editor.document.offsetAt(editor.selection.active), nonQuotedKeyRegex)
 
-            if (fileNameAsPrefix && editor.document.fileName) {
+            if (fileNameAsPrefix && !editor.document.isUntitled) {
                 const fileName = parse(editor.document.fileName).base;
                 const fileNameWithoutExtension = fileName.substring(0, fileName.lastIndexOf('.'))
                 
                 path = `${fileNameWithoutExtension}${prefixSeparator}${path}`
             }
+
+            // check if the document is saved
 
             vscode.env.clipboard.writeText(path)
         } catch (ex) {
