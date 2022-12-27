@@ -48,7 +48,7 @@
         },
         "extension.copyJsonPath.putFileNameInPath": {
           "type": "boolean",
-          "default": "false",
+          "default": false,
           "markdownDescription": "Boolean to set if the file name should be in the path."
         },
         "extension.copyJsonPath.prefixSeparator": {
