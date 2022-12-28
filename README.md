@@ -31,6 +31,10 @@ Launch command `Copy Json Path` from command palette or context menu.
 
 - `extension.copyJsonPath.nonQuotedKeyRegex`: regex that tests whether key in path can be used without quotes. If key matches - key is not quoted. Use it if you want to have path `a.b-c` instead of `a[\"b-c\"]` for example. If you want all keys to be escaped - use regex that doesn't match anything, e.g. single space ` ` will only match single space, which is very rare object key (you can go more complicated like `a{1000}`). Default is `^[a-zA-Z$_][a-zA-Z\\d$_]*$`.
 
+- `extension.copyJsonPath.putFileNameInPath`: boolean to set if the file name should be in the path. Default is `false`.
+
+- `extension.copyJsonPath.prefixSeparator`: string separator to put between the prefix and the path. Default is `:`.
+
 ## Linux dependency
 
 xclip

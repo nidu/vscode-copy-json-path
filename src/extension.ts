@@ -3,6 +3,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode'
 import {jsPathTo} from './jsPathTo'
+import {parse} from 'path';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -25,6 +26,15 @@ export function activate(context: vscode.ExtensionContext) {
             let nonQuotedKeyRegex = vscode.workspace
                 .getConfiguration('extension.copyJsonPath')
                 .get('nonQuotedKeyRegex') as string
+
+            const fileNameAsPrefix = vscode.workspace
+                .getConfiguration('extension.copyJsonPath')
+                .get('putFileNameInPath') as boolean
+
+            const prefixSeparator = vscode.workspace
+                .getConfiguration('extension.copyJsonPath')
+                .get('prefixSeparator') as string
+
             if (nonQuotedKeyRegex) {
                 try {
                     new RegExp(nonQuotedKeyRegex)
@@ -37,7 +47,19 @@ export function activate(context: vscode.ExtensionContext) {
 
             const text = editor.document.getText()
             // JSON.parse(text)
-            const path = jsPathTo(text, editor.document.offsetAt(editor.selection.active), nonQuotedKeyRegex)
+            let path = jsPathTo(text, editor.document.offsetAt(editor.selection.active), nonQuotedKeyRegex)
+
+            if (fileNameAsPrefix && !editor.document.isUntitled) {
+                /**
+                 * If the file has no name, like `.json`, than name will be `.json`.
+                 */
+                const name = parse(editor.document.fileName).name;
+
+                if (name) {
+                  path = `${name}${prefixSeparator}${path}`;
+                }  
+            }
+
             vscode.env.clipboard.writeText(path)
         } catch (ex) {
             if (ex instanceof SyntaxError) {
