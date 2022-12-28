@@ -41,6 +41,10 @@ xclip
 
 ## Change Log
 
+### 0.3.0
+
+- Add the option to put the file name in the returned path (@olivier-deschenes, #15)
+
 ### 0.2.1
 
 - Add info on regex for all keys to be escaped for `nonQuotedKeyRegex` (see issue #13)
