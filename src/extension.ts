@@ -35,6 +35,10 @@ export function activate(context: vscode.ExtensionContext) {
                 .getConfiguration('extension.copyJsonPath')
                 .get('prefixSeparator') as string
 
+            const pathSeparator = vscode.workspace
+                .getConfiguration('extension.copyJsonPath')
+                .get('pathSeparator') as string
+
             if (nonQuotedKeyRegex) {
                 try {
                     new RegExp(nonQuotedKeyRegex)
@@ -47,7 +51,7 @@ export function activate(context: vscode.ExtensionContext) {
 
             const text = editor.document.getText()
             // JSON.parse(text)
-            let path = jsPathTo(text, editor.document.offsetAt(editor.selection.active), nonQuotedKeyRegex)
+            let path = jsPathTo(text, editor.document.offsetAt(editor.selection.active), nonQuotedKeyRegex, pathSeparator)
 
             if (fileNameAsPrefix && !editor.document.isUntitled) {
                 /**

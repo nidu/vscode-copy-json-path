@@ -35,11 +35,17 @@ Launch command `Copy Json Path` from command palette or context menu.
 
 - `extension.copyJsonPath.prefixSeparator`: string separator to put between the prefix and the path. Default is `:`.
 
+- `extension.copyJsonPath.pathSeparator`: string separator to put between the parts of the path. Default is `.`.
+
 ## Linux dependency
 
 xclip
 
 ## Change Log
+
+### 0.4.0
+
+- Add option `pathSeparator` to control path separator
 
 ### 0.3.0
 

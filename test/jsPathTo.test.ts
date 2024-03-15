@@ -3,11 +3,11 @@ import {jsPathTo} from '../src/jsPathTo'
 
 const cursorChar = "#"
 
-function checkJsonPath(expected: string, strWithCursor: string, nonQuotedKeyRegex?: string) {
+function checkJsonPath(expected: string, strWithCursor: string, nonQuotedKeyRegex?: string, pathSeparator?: string) {
     const pos = strWithCursor.indexOf(cursorChar)
     if (pos == -1) throw `Cursor not found in ${strWithCursor}`
 
-    const path = jsPathTo(strWithCursor.replace(cursorChar, ''), pos, nonQuotedKeyRegex)
+    const path = jsPathTo(strWithCursor.replace(cursorChar, ''), pos, nonQuotedKeyRegex, pathSeparator)
     it(expected, () =>
       assert.strictEqual(expected, path, `Expected [${expected}], got [${path}] for [${strWithCursor}]`)
     )
@@ -159,4 +159,6 @@ describe("jsonPathTo", () => {
         jsPathTo('{"a": 1}', 1, '(')
       })
     })
+
+    checkJsonPath('b:daq[1]', 'var a = {"b": {c: 4, daq: [5, #15]}}', undefined, ':')
 })

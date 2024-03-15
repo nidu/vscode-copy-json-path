@@ -15,7 +15,7 @@ function looksLikeJson(text: string) {
     return text.match(/^\s*[{\[](.|[\r\n])*[}\]]\s*$/)
 }
 
-export function jsPathTo(text: string, offset: number, nonQuotedKeyRegex: string = DEFAULT_NON_QUOTED_KEY_REGEX) {
+export function jsPathTo(text: string, offset: number, nonQuotedKeyRegex: string = DEFAULT_NON_QUOTED_KEY_REGEX, pathSeparator = '.') {
     if (looksLikeJson(text)) {
         const prefix = "a="
         text = prefix + text
@@ -90,13 +90,13 @@ export function jsPathTo(text: string, offset: number, nonQuotedKeyRegex: string
             }
         })
     } catch (e) {
-        if (e == "Ok") return pathToString(path, nonQuotedKeyRegex)
+        if (e == "Ok") return pathToString(path, nonQuotedKeyRegex, pathSeparator)
         throw e
     }
     return ""
 }
 
-function pathToString(path: Frame[], nonQuotedKeyRegex: string): string {
+function pathToString(path: Frame[], nonQuotedKeyRegex: string, pathSeparator: string): string {
     let s = ''
     for (const frame of path) {
         if (frame.colType == ColType.Object) {
@@ -105,7 +105,7 @@ function pathToString(path: Frame[], nonQuotedKeyRegex: string): string {
                 s += `["${key}"]`
             } else {
                 if (s.length) {
-                    s += '.'
+                    s += pathSeparator;
                 }
                 s += frame.key
             }
